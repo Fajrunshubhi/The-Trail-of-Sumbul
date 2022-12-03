@@ -6,8 +6,8 @@ public class Mouse : MonoBehaviour
 {
 
     public Sprite flatSprite;
-    private void OnTriggerEnter2D(Collider2D collision){
-        if(collision.gameObject.CompareTag("WeakPoin")){
+    private void OnCollisionEnter2D(Collision2D collision){
+        if(collision.gameObject.CompareTag("Player")){
             if(collision.transform.DotTest(transform, Vector2.down)){
                 Flatten();
                 Debug.Log("hmm");
