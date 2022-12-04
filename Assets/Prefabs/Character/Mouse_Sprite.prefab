@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2119018481711094298}
   - component: {fileID: 2119018481711094301}
   - component: {fileID: 2119018481711094300}
-  - component: {fileID: 2119018481711094303}
   - component: {fileID: 2119018481711094302}
   m_Layer: 7
   m_Name: Mouse_Sprite
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
   damage: 1
-  enemyMovement: {fileID: 2119018481711094303}
+  enemyMovement: {fileID: 0}
 --- !u!114 &2119018481711094300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,23 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flatSprite: {fileID: -161664146, guid: 631421cb8b52781468f14ffd20dfad1e, type: 3}
---- !u!114 &2119018481711094303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119018481711094369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e4bd95560d1b6f4788e91bec6de2707, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  flipBody: 0
   anim: {fileID: 0}
-  isHurting: 0
-  isDead: 0
+  enemyMovement: {fileID: 0}
 --- !u!50 &2119018481711094302
 Rigidbody2D:
   serializedVersion: 4

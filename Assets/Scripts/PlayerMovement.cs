@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 velocity; // Kecepatan gerak horizonal dan vertikal
     public float moveSpeed = 5f; // Kecepatan Bergerak yang ditentukan
 
+    public PlayerLife playerHealt;
 
     // Player Jump
     public float maxJumpHeight = 5f; // max jump
@@ -40,12 +41,14 @@ public class PlayerMovement : MonoBehaviour
     private float ladderSpeed = 5f;
     private bool isLadder;
     private bool isClimbing;
+    private bool isHurting, isDead;
  
     private void Awake(){
         rigidbody = GetComponent<Rigidbody2D>();
         camera = Camera.main;
         doubJump = totJump;   
         animator = GetComponent<Animator>();
+        //playerHealt = GetComponent<PlayerLife>();
     }
 
     private void Update(){
@@ -62,10 +65,13 @@ public class PlayerMovement : MonoBehaviour
         SetAnimationState();
 
         // LADDER
-        ladderVertical = Input.GetAxis("Vertical");
-        if(isLadder && Mathf.Abs(ladderVertical) > 0f){
-            isClimbing = true;
-        }
+        if(!isDead){
+            ladderVertical = Input.GetAxis("Vertical");
+            if(isLadder && Mathf.Abs(ladderVertical) > 0f){
+                isClimbing = true;
+            }
+        }    
+        
     }
 
     private void FixedUpdate(){
@@ -81,10 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
         // LADDER
         if(isClimbing){
-            // rigidbody.gravityScale = 0f;
             velocity.y = Mathf.MoveTowards(velocity.y, ladderVertical * ladderSpeed, moveSpeed);
-        }else{
-            // rigidbody.gravityScale = 4f;
         }
 
     }
@@ -93,7 +96,6 @@ public class PlayerMovement : MonoBehaviour
         inputAxis = Input.GetAxis("Horizontal");
         velocity.x = Mathf.MoveTowards(velocity.x, inputAxis * moveSpeed, moveSpeed);
         if(rigidbody.Raycast(Vector2.right * velocity.x)){
-            // velocity.x = 0f;
             animator.SetBool("IsWalking", false);
         }
         if(velocity.x > 0f){
@@ -145,29 +147,46 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     // LADDER
     private void OnTriggerEnter2D(Collider2D collision){
-        if (collision.CompareTag("Ladder")){
+        if (collision.gameObject.CompareTag("Ladder")){
             isLadder = true;
             animator.SetBool("IsClimb", true);
-        }
+        } 
+        
+        // if(collision.gameObject.CompareTag("Enemy")){
+        //     animator.SetBool("IsHit", true);
+        //     if(playerHealt.health <= 0){
+        //         animator.SetBool("IsHit", false);
+        //         animator.SetBool("IsDead", true);
+        //         Destroy(gameObject, 1f);
+        //         Debug.Log(playerHealt.health);
+        //     }
+            
+        // } 
     }
     private void OnTriggerExit2D(Collider2D collision){
-        if (collision.CompareTag("Ladder")){
+        if (collision.gameObject.CompareTag("Ladder")){
             isLadder = false;
             isClimbing = false;
             animator.SetBool("IsClimb", false);
         }
+        // if(collision.gameObject.CompareTag("Enemy")){
+        //     animator.SetBool("IsHit", false);     
+        // } 
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.layer != LayerMask.NameToLayer("PowerUp")){
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy")){
+            if(transform.DotTest(collision.transform, Vector2.down)){
+                velocity.y = 10f;
+                jumping = true;
+            }
+        }
+        else if(collision.gameObject.layer != LayerMask.NameToLayer("PowerUp")){
             if(transform.DotTest(collision.transform, Vector2.up)){
                 velocity.y = 0f;
             }
         }   
     }
-
-
 }

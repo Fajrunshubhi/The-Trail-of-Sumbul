@@ -12,8 +12,7 @@ public class EnemyDamage : MonoBehaviour
         StartCoroutine(Hurt());
         if(collision.gameObject.CompareTag("EnemyHit")){
             playerHealth.TakeDamage(damage);
-            enemyMovement.moveSpeed = 0f;
-            Debug.Log("hmmmm");
+            enemyMovement.moveSpeed = 0f; 
         }
     }
     private void OnTriggerExit2D(Collider2D collision){
