@@ -52,6 +52,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update(){
+        if (Input.GetKey (KeyCode.LeftShift)){
+            moveSpeed = 10f;
+            animator.SetBool("IsRunning", true);
+        }else{
+            animator.SetBool("IsRunning", false);
+            moveSpeed = 5f;
+        }
         HorizontalMovement();
         grounded = rigidbody.Raycast(Vector2.down);
         if(grounded){
