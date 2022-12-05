@@ -130,8 +130,6 @@ public class PlayerMovement : MonoBehaviour
         velocity.y = Mathf.Max(velocity.y, gravity / 2f);
     }
 
-    
-
     public void SetAnimationState(){
         if (velocity.x != 0){
             animator.SetBool("IsWalking", true);
@@ -153,17 +151,6 @@ public class PlayerMovement : MonoBehaviour
             isLadder = true;
             animator.SetBool("IsClimb", true);
         } 
-        
-        // if(collision.gameObject.CompareTag("Enemy")){
-        //     animator.SetBool("IsHit", true);
-        //     if(playerHealt.health <= 0){
-        //         animator.SetBool("IsHit", false);
-        //         animator.SetBool("IsDead", true);
-        //         Destroy(gameObject, 1f);
-        //         Debug.Log(playerHealt.health);
-        //     }
-            
-        // } 
     }
     private void OnTriggerExit2D(Collider2D collision){
         if (collision.gameObject.CompareTag("Ladder")){
@@ -171,9 +158,6 @@ public class PlayerMovement : MonoBehaviour
             isClimbing = false;
             animator.SetBool("IsClimb", false);
         }
-        // if(collision.gameObject.CompareTag("Enemy")){
-        //     animator.SetBool("IsHit", false);     
-        // } 
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
@@ -188,5 +172,13 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y = 0f;
             }
         }   
+
+
+        if(collision.gameObject.CompareTag("TrapHit")){
+            if(transform.DotTest(collision.transform, Vector2.down)){
+                velocity.y = 10f;
+                jumping = true;
+            }
+        }
     }
 }

@@ -9,6 +9,10 @@ TagManager:
   - WeakPoin
   - Enemy
   - EnemyHit
+  - Water
+  - TrapHit
+  - Heal
+  - Koin
   layers:
   - Default
   - TransparentFX

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Mouse : MonoBehaviour
 {
-
     public Sprite flatSprite;
     public Animator anim;
     public EnemyMovement enemyMovement;
@@ -17,19 +16,12 @@ public class Mouse : MonoBehaviour
             if(collision.transform.DotTest(transform, Vector2.down)){
                 anim.SetTrigger("IsDead");
                 anim.SetTrigger("IsHit");
-                Flatten();
+                Dead();
             }    
         }
     }
-    // private void OnCollisionExit2D(Collision2D collision){
-    //     if(collision.gameObject.CompareTag("Player")){
-    //         if(collision.transform.DotTest(transform, Vector2.down)){
-                
-    //         } 
-    //     }
-    // }
 
-    private void Flatten(){
+    private void Dead(){
         GetComponent<Collider2D>().enabled = false;
         GetComponent<EnemyMovement>().enabled = false;
         Destroy(gameObject, 0.5f);

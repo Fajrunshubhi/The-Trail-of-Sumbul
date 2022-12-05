@@ -11,8 +11,6 @@ public class HealthDisplay : MonoBehaviour
     public Sprite fullHeart;
     public Image[] hearts;
 
-    public PlayerLife playerHealth;
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -21,8 +19,8 @@ public class HealthDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health = playerHealth.health;
-        maxHealth = playerHealth.maxHealth;
+        health = GameManager.Instance.lives;
+        maxHealth = GameManager.Instance.maxLives;
 
         for(int i = 0; i < hearts.Length; i++){
             if (i < maxHealth){
