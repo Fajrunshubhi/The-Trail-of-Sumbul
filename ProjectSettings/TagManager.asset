@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: bg_1
+    uniqueID: 3547380281
+    locked: 0
+  - name: bg_2
+    uniqueID: 554923703
+    locked: 0
+  - name: bg_3
+    uniqueID: 3496214905
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: arena
+    uniqueID: 196987405
     locked: 0
