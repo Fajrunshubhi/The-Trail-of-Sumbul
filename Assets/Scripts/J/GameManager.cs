@@ -24,8 +24,7 @@ public class GameManager : MonoBehaviour
         } else{
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-        
+        }       
     }
 
     private void Start(){
@@ -38,12 +37,16 @@ public class GameManager : MonoBehaviour
             Instance = null;
         }
     }
+    public void MainMenu(){
+        SceneManager.LoadScene("Menu");
+    }
     public void NewGame(){
         lives = maxLives;
         // loadLevel("Level", 3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    private void loadLevel(string world, int stage){
+    public void loadLevel(string world, int stage){
+        lives = maxLives;
         this.world = world;
         this.stage = stage;
         SceneManager.LoadScene($"{world}_{stage}");
@@ -118,7 +121,13 @@ public class GameManager : MonoBehaviour
         return allKoin;
     }
 
-    public void PauseGame(){
+    public void PauseGame(GameObject gameOverScreen){
         Time.timeScale = 0;
+        gameOverScreen.SetActive(true);
+    }
+
+    public void ResumeGame(GameObject gameOverScreen){
+        Time.timeScale = 1;
+        gameOverScreen.SetActive(false);
     }
 }

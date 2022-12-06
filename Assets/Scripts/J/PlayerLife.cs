@@ -9,6 +9,9 @@ public class PlayerLife : MonoBehaviour
     public Animator anim;
 
     public GameObject gameOverScreen;
+    public GameObject gamePauseScreen;
+    [SerializeField] private AudioSource hitCatSoundEffect;
+    [SerializeField] private AudioSource gameOverSoundEffect;
     
 
     void Start()
@@ -30,16 +33,18 @@ public class PlayerLife : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision){  
         if(collision.gameObject.CompareTag("Enemy")){
             anim.SetBool("IsHit", true);
-            if(GameManager.Instance.lives <= 0){
+            if(GameManager.Instance.lives <= 1){
                 anim.SetBool("IsHit", false);
                 anim.SetBool("IsDead", true);
                 GameManager.Instance.gameOver(gameOverScreen);
+                gameOverSoundEffect.PlayDelayed(0.5f);
             }            
         } 
         if(collision.gameObject.CompareTag("Water")){
             // OPTION 1X HIT LANGSUNG MATI
             // GameManager.Instance.DeadByWater(5);
             // OPTION 5X HIT
+            hitCatSoundEffect.Play();
             GameManager.Instance.Hit(1);
             anim.SetBool("IsHit", true);
             if(GameManager.Instance.lives <= 0){
@@ -47,6 +52,7 @@ public class PlayerLife : MonoBehaviour
                 anim.SetBool("IsDead", true);
                 playerMovement.enabled = false;
                 GameManager.Instance.gameOver(gameOverScreen);
+                gameOverSoundEffect.PlayDelayed(0.5f);
             }
         }
     }
@@ -62,6 +68,7 @@ public class PlayerLife : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("TrapHit")){
+            hitCatSoundEffect.Play();
             GameManager.Instance.Hit(1);
             anim.SetBool("IsHit", true);
             if(GameManager.Instance.lives <= 0){
@@ -69,6 +76,7 @@ public class PlayerLife : MonoBehaviour
                 anim.SetBool("IsDead", true);
                 playerMovement.enabled = false;
                 GameManager.Instance.gameOver(gameOverScreen);
+                gameOverSoundEffect.PlayDelayed(0.5f);
             } 
         }
     }
@@ -76,9 +84,8 @@ public class PlayerLife : MonoBehaviour
         if(collision.gameObject.CompareTag("TrapHit")){
             anim.SetBool("IsHit", false);
         }
-    }
-
-    public void PauseGame(){
-        GameManager.Instance.PauseGame();
+    } 
+    public void pauseGame(){
+        GameManager.Instance.PauseGame(gamePauseScreen);
     }
 }

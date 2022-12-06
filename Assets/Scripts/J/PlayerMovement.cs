@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isLadder;
     private bool isClimbing;
     private bool isHurting, isDead;
+
+    // AUDIO
+    [SerializeField] private AudioSource jumpSoundEffect;
+    [SerializeField] private AudioSource coinSoundEffect;
  
     private void Awake(){
         rigidbody = GetComponent<Rigidbody2D>();
@@ -109,8 +113,7 @@ public class PlayerMovement : MonoBehaviour
             transform.eulerAngles = Vector3.zero;
         } else if(velocity.x < 0f){
             transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
-        
+        }        
     }
 
     private void GroundedMovement(){
@@ -118,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
         jumping = velocity.y > 0f;
 
         if(Input.GetButtonDown("Jump")){
+            jumpSoundEffect.Play();
             velocity.y = jumpForce;
             jumping = true;
         }
@@ -125,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpAgain(){
         if((Input.GetButtonDown("Jump"))){
+            jumpSoundEffect.Play();
             velocity.y = jumpForce;
             doubJump-=1;
         }
@@ -158,6 +163,9 @@ public class PlayerMovement : MonoBehaviour
             isLadder = true;
             animator.SetBool("IsClimb", true);
         } 
+        if(collision.gameObject.CompareTag("Koin")){
+            coinSoundEffect.Play();                   
+        }
     }
     private void OnTriggerExit2D(Collider2D collision){
         if (collision.gameObject.CompareTag("Ladder")){
