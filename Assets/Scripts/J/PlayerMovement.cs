@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Player Jump
     public float maxJumpHeight = 5f; // max jump
-    public float maxJumpTime = 1.5f; // Waktu maksimal jump
-    public float jumpForce => (1.7f * maxJumpHeight) / (maxJumpTime / 2f);
+    public float maxJumpTime = 1.3f; // Waktu maksimal jump
+    public float jumpForce => (1.9f * maxJumpHeight) / (maxJumpTime / 2f);
     public float gravity => (-2f * maxJumpHeight) / Mathf.Pow((maxJumpTime / 2f), 2);
 
     // Mengecek apakah karakter di ground
@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
     private void JumpAgain(){
         if((Input.GetButtonDown("Jump"))){
             jumpSoundEffect.Play();
-            velocity.y = jumpForce;
+            velocity.y = jumpForce-1f;
             doubJump-=1;
         }
     }
@@ -166,6 +166,10 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.CompareTag("Koin")){
             coinSoundEffect.Play();                   
         }
+        if(collision.gameObject.CompareTag("Water")){
+            velocity.y = 10f;
+            jumping = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision){
         if (collision.gameObject.CompareTag("Ladder")){
@@ -188,12 +192,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }   
 
-
         if(collision.gameObject.CompareTag("TrapHit")){
             if(transform.DotTest(collision.transform, Vector2.down)){
                 velocity.y = 10f;
                 jumping = true;
             }
-        }
+        }        
     }
 }

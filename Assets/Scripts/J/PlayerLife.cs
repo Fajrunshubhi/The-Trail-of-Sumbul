@@ -12,6 +12,7 @@ public class PlayerLife : MonoBehaviour
     public GameObject gamePauseScreen;
     [SerializeField] private AudioSource hitCatSoundEffect;
     [SerializeField] private AudioSource gameOverSoundEffect;
+    [SerializeField] private AudioSource HitMouse;
     
 
     void Start()
@@ -33,11 +34,12 @@ public class PlayerLife : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision){  
         if(collision.gameObject.CompareTag("Enemy")){
             anim.SetBool("IsHit", true);
-            if(GameManager.Instance.lives <= 1){
+            if(GameManager.Instance.lives <= 0){
                 anim.SetBool("IsHit", false);
                 anim.SetBool("IsDead", true);
+                playerMovement.enabled = false;
                 GameManager.Instance.gameOver(gameOverScreen);
-                gameOverSoundEffect.PlayDelayed(0.5f);
+                gameOverSoundEffect.Play();
             }            
         } 
         if(collision.gameObject.CompareTag("Water")){
@@ -52,7 +54,7 @@ public class PlayerLife : MonoBehaviour
                 anim.SetBool("IsDead", true);
                 playerMovement.enabled = false;
                 GameManager.Instance.gameOver(gameOverScreen);
-                gameOverSoundEffect.PlayDelayed(0.5f);
+                gameOverSoundEffect.Play();
             }
         }
     }
@@ -76,8 +78,11 @@ public class PlayerLife : MonoBehaviour
                 anim.SetBool("IsDead", true);
                 playerMovement.enabled = false;
                 GameManager.Instance.gameOver(gameOverScreen);
-                gameOverSoundEffect.PlayDelayed(0.5f);
+                gameOverSoundEffect.Play();
             } 
+        }
+        if(collision.gameObject.CompareTag("Enemy")){
+            HitMouse.PlayDelayed(-1f);
         }
     }
     private void OnCollisionExit2D(Collision2D collision){
