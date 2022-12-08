@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public PlayerLife playerHealt;
 
     // Player Jump
-    public float maxJumpHeight = 5f; // max jump
-    public float maxJumpTime = 1.3f; // Waktu maksimal jump
-    public float jumpForce => (1.9f * maxJumpHeight) / (maxJumpTime / 2f);
+    public float maxJumpHeight = 6f; // max jump
+    public float maxJumpTime = 1.5f; // Waktu maksimal jump
+    public float jumpForce => (2f * maxJumpHeight) / (maxJumpTime / 2f);
     public float gravity => (-2f * maxJumpHeight) / Mathf.Pow((maxJumpTime / 2f), 2);
 
     // Mengecek apakah karakter di ground
