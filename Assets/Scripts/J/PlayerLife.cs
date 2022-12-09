@@ -10,9 +10,11 @@ public class PlayerLife : MonoBehaviour
 
     public GameObject gameOverScreen;
     public GameObject gamePauseScreen;
+    public GameObject gameFinishScreen;
     [SerializeField] private AudioSource hitCatSoundEffect;
     [SerializeField] private AudioSource gameOverSoundEffect;
     [SerializeField] private AudioSource HitMouse;
+    [SerializeField] private AudioSource finishSoundEffect;
     
 
     void Start()
@@ -56,6 +58,14 @@ public class PlayerLife : MonoBehaviour
                 GameManager.Instance.gameOver(gameOverScreen);
                 gameOverSoundEffect.Play();
             }
+        }
+
+        if(collision.gameObject.CompareTag("CatsLevel1")){
+            GameManager.Instance.FinishGame(gameFinishScreen);
+            finishSoundEffect.Play();
+            // set coin
+            GameManager.Instance.setAllKoinStage();
+            GameManager.Instance.setAllKoin();
         }
     }
 
