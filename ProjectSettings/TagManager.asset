@@ -16,6 +16,7 @@ TagManager:
   - CatsLevel1
   - CatsHappy
   - level2
+  - cityBottomWall
   layers:
   - Default
   - TransparentFX

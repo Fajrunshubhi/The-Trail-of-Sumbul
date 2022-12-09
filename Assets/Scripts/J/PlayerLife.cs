@@ -67,6 +67,20 @@ public class PlayerLife : MonoBehaviour
             GameManager.Instance.setAllKoinStage();
             GameManager.Instance.setAllKoin();
         }
+            
+        if(collision.gameObject.CompareTag("cityBottomWall")){
+            // di city jatuh 
+            hitCatSoundEffect.Play();
+            GameManager.Instance.Hit(5);
+            anim.SetBool("IsHit", true);
+            if(GameManager.Instance.lives <= 0){
+                anim.SetBool("IsHit", false);
+                anim.SetBool("IsDead", true);
+                playerMovement.enabled = false;
+                GameManager.Instance.gameOver(gameOverScreen);
+                gameOverSoundEffect.PlayDelayed(0.5f);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision){
