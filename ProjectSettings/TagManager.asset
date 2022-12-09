@@ -13,6 +13,9 @@ TagManager:
   - TrapHit
   - Heal
   - Koin
+  - CatsLevel1
+  - CatsHappy
+  - level2
   - cityBottomWall
   layers:
   - Default
